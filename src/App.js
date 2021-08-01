@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import './App.css';
 
 export class App extends Component {
   constructor(props) {
@@ -28,33 +29,37 @@ export class App extends Component {
     return (
       <div>
         <center>
-        <Form onSubmit={this.submitForm}>
-          <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-            <Form.Label>City Name</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Enter The City Name'
-              name='cityName'
-            />
-          </Form.Group>
-          <Button type='submit'>Explore!</Button>
-        </Form>
+          <Form onSubmit={this.submitForm}>
+            <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
+              <Form.Label>City Name</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter The City Name'
+                name='cityName'
+              />
+            </Form.Group>
+            <Button type='submit'>Explore!</Button>
+          </Form>
         </center>
         <center>
-        <Card style={{ width: '25rem' }}>
-          <Card.Img
-            variant='top'
-            src={`https://maps.locationiq.com/v3/staticmap?key=pk.b0acd25fa217904d671efabb56c53d66&q&center=${this.state.locationData.lat},${this.state.locationData.lon}&zoom=15`}
-          />
-          <Card.Body>
-            <Card.Title>Location information</Card.Title>
-            <Card.Text>
-              {this.state.locationData.display_name && 
-                <p>{this.state.locationData.display_name}</p>
-              }
-            </Card.Text>
-          </Card.Body>
-        </Card>
+          <Card style={{ width: '25rem' }}>
+            <Card.Img
+              variant='top'
+              src={`https://maps.locationiq.com/v3/staticmap?key=pk.b0acd25fa217904d671efabb56c53d66&q&center=${this.state.locationData.lat},${this.state.locationData.lon}&zoom=15`}
+            />
+            <Card.Body>
+              <Card.Title>Location information</Card.Title>
+              <Card.Text>
+                {this.state.locationData.display_name && (
+                  <p>
+                    {this.state.locationData.display_name}
+                    <p>Longitude:{this.state.locationData.lon}</p>
+                    Latitude:{this.state.locationData.lon}
+                  </p>
+                )}
+              </Card.Text>
+            </Card.Body>
+          </Card>
         </center>
       </div>
     );
