@@ -5,16 +5,19 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './App.css';
+import Alert from 'react-bootstrap/Alert';
 
 export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       locationData: {},
+      errorMsg:'',
     };
   }
 
   submitForm = async (e) => {
+    try{
     e.preventDefault();
     const city = e.target.cityName.value;
     const response = await axios.get(
@@ -22,26 +25,41 @@ export class App extends Component {
     );
     this.setState({
       locationData: response.data[0],
+      errorMsg: '',
     });
-    console.log('our axios response', response.data[0]);
-  };
+  }
+
+
+catch (error) {
+  this.setState({
+    errorMsg: error.message,
+  })
+  // console.log(error.message)
+}
+
+}
   render() {
     return (
       <div>
         <center>
           <Form onSubmit={this.submitForm}>
             <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-              <Form.Label>City Name</Form.Label>
+              <Form.Label style={{ padding: '12px 20px'}}>City Name</Form.Label>
               <Form.Control
+               style={{width:'50%'}}
                 type='text'
                 placeholder='Enter The City Name'
                 name='cityName'
               />
             </Form.Group>
             <Button type='submit'>Explore!</Button>
+            {this.state.errorMsg && <Alert key={1} variant={'danger'}>
+            {this.state.errorMsg}
+          </Alert>}
           </Form>
         </center>
         <center>
+          <br />
           <Card style={{ width: '25rem' }}>
             <Card.Img
               variant='top'
@@ -52,7 +70,7 @@ export class App extends Component {
               <Card.Text>
                 {this.state.locationData.display_name && (
                   <p>
-                    {this.state.locationData.display_name}
+                    <p>{this.state.locationData.display_name}</p>
                     <p>Longitude:{this.state.locationData.lon}</p>
                     Latitude:{this.state.locationData.lon}
                   </p>
