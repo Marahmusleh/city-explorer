@@ -12,50 +12,50 @@ export class App extends Component {
     super(props);
     this.state = {
       locationData: {},
-      errorMsg:'',
+      errorMsg: '',
     };
   }
 
   submitForm = async (e) => {
-    try{
-    e.preventDefault();
-    const city = e.target.cityName.value;
-    const response = await axios.get(
-      `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${city}&format=json`
-    );
-    this.setState({
-      locationData: response.data[0],
-      errorMsg: '',
-    });
-  }
-
-
-catch (error) {
-  this.setState({
-    errorMsg: error.message,
-  })
-  // console.log(error.message)
-}
-
-}
+    try {
+      e.preventDefault();
+      const city = e.target.cityName.value;
+      const response = await axios.get(
+        `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${city}&format=json`
+      );
+      this.setState({
+        locationData: response.data[0],
+        errorMsg: '',
+      });
+    } catch (error) {
+      this.setState({
+        errorMsg: error.message,
+      });
+      // console.log(error.message)
+    }
+  };
   render() {
     return (
       <div>
         <center>
           <Form onSubmit={this.submitForm}>
             <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-              <Form.Label style={{ padding: '12px 20px'}}>City Name</Form.Label>
+              <Form.Label style={{ padding: '12px 20px' }}>
+                City Name
+              </Form.Label>
               <Form.Control
-               style={{width:'50%'}}
+                style={{ width: '50%' }}
                 type='text'
                 placeholder='Enter The City Name'
                 name='cityName'
               />
             </Form.Group>
             <Button type='submit'>Explore!</Button>
-            {this.state.errorMsg && <Alert key={1} variant={'danger'}>
-            {this.state.errorMsg}
-          </Alert>}
+            {this.state.errorMsg && (
+              <Alert key={1} variant={'danger'}>
+                {this.state.errorMsg}
+              </Alert>
+            )}
           </Form>
         </center>
         <center>
