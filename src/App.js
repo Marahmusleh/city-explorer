@@ -63,7 +63,7 @@ export class App extends Component {
         </center>
         <center>
           <br />
-          {this.state.displayLocation && (
+          {this.state.displayLocation && 
             <Card style={{ width: '25rem' }}>
               <Card.Img
                 variant='top'
@@ -82,7 +82,7 @@ export class App extends Component {
                   </Card.Text>
               </Card.Body>
             </Card>
-          )}
+          }
         </center>
       </div>
     );
