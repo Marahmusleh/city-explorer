@@ -11,85 +11,68 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      display_name: '',
-      errorMsg: '',
-      lon : '',
-      lat : '',
-      displayData: false,
+      locationData: {},
+      errorMsg:'',
     };
   }
 
-  
-
   submitForm = async (e) => {
-    try {
-      e.preventDefault();
-      let cityName = e.target.city.value;
-      const URL = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${cityName}&format=json`;
-      let response = await (axios.get(URL));
-
-      this.setState({
-        displayData: true,
-        display_name : response.data[0].display_name,
-        lon : response.data[0].lon,
-        lat : response.data[0].lat,
-        errorMsg: '',
-      });
-    } catch (error) {
-      this.setState({
-        errorMsg: error.message,
-        displayData: false,
-      });
-      // console.log(error.message)
-    }
-    let mapData = await axios.get(`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_CITY_KEY}&center=${this.state.lat},${this.state.lon}
-    &markers=icon:small-gray-cutout|${this.state.lat},${this.state.lon}`);
-
-
+    e.preventDefault();
+    try{
+    const city = e.target.cityName.value;
+    const response = await axios.get(
+      `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${city}&format=json`
+    );
     this.setState({
-        link: mapData.config.url,
+      locationData: response.data[0],
+      errorMsg: '',
     });
+  }
 
-  };
+
+catch (error) {
+  this.setState({
+    errorMsg: error.message,
+  })
+  // console.log(error.message)
+}
+
+}
   render() {
     return (
       <div>
         <center>
           <Form onSubmit={this.submitForm}>
             <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-              <Form.Label style={{ padding: '12px 20px' }}>
-                City Name
-              </Form.Label>
+              <Form.Label style={{ padding: '12px 20px'}}>City Name</Form.Label>
               <Form.Control
-                style={{ width: '50%' }}
+               style={{width:'50%'}}
                 type='text'
                 placeholder='Enter The City Name'
-                name='city'
+                name='cityName'
               />
             </Form.Group>
             <Button type='submit'>Explore!</Button>
-            {this.state.errorMsg && (
-              <Alert key={1} variant={'danger'}>
-                {this.state.errorMsg}
-              </Alert>
-            )}
+            {this.state.errorMsg && <Alert key={1} variant={'danger'}>
+            {this.state.errorMsg}
+          </Alert>}
           </Form>
         </center>
         <center>
           <br />
           <Card style={{ width: '25rem' }}>
-            <img
+            <Card.Img
               variant='top'
-              src={this.state.link}            />
-
+              src={`https://maps.locationiq.com/v3/staticmap?key=pk.b0acd25fa217904d671efabb56c53d66&q&center=${this.state.locationData.lat},${this.state.locationData.lon}&zoom=15`}
+            />
             <Card.Body>
               <Card.Title>Location information</Card.Title>
               <Card.Text>
-                {this.state.displayData && (
+                {this.state.locationData.display_name && (
                   <p>
-                    <p>{this.state.display_name}</p>
-                    <p>Longitude:{this.state.lon}</p>
-                    Latitude:{this.state.lat}
+                    <p>{this.state.locationData.display_name}</p>
+                    <p>Longitude:{this.state.locationData.lon}</p>
+                    Latitude:{this.state.locationData.lon}
                   </p>
                 )}
               </Card.Text>
