@@ -22,7 +22,7 @@ export class App extends Component {
     try {
       const city = e.target.cityName.value;
       const response = await axios.get(
-        `https://eu1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${city}&format=json`
+        `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_CITY_KEY}&q=${city}&format=json`
       );
       this.setState({
         locationData: response.data[0],
