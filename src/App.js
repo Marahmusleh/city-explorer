@@ -15,7 +15,7 @@ export class App extends Component {
       locationData: {},
       errorMsg: '',
       displayLocation: false,
-      showWeather:true,
+      showWeather: true,
     };
   }
 
@@ -35,13 +35,13 @@ export class App extends Component {
         locationData: locationIqData,
         errorMsg: '',
         displayLocation: true,
-        weatherData: weatherResponse.data
+        weatherData: weatherResponse.data,
       });
     } catch (error) {
       this.setState({
         errorMsg: error.message,
         displayLocation: false,
-        showWeather:false
+        showWeather: false,
       });
       // console.log(error.message)
     }
@@ -72,7 +72,7 @@ export class App extends Component {
         </center>
         <center>
           <br />
-          {this.state.displayLocation && (
+          {this.state.displayLocation && 
             <div>
               <Card style={{ width: '25rem' }}>
                 <Card.Img
@@ -86,13 +86,15 @@ export class App extends Component {
                   <Card.Text>Latitude:{this.state.locationData.lon}</Card.Text>
                 </Card.Body>
               </Card>
-                  <div>
-                          <Weather weatherData={this.state.weatherData} showWeather={this.state.showWeather} />
 
-                  </div>
-              
+              <div>
+                <Weather
+                  weatherData={this.state.weatherData}
+                  showWeather={this.state.showWeather}
+                />
+              </div>
             </div>
-          )}
+          }
         </center>
       </div>
     );
