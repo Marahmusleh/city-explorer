@@ -31,11 +31,11 @@ export class App extends Component {
       const locationIqData = response.data[0];
       const cityName = locationIqData.display_name.split(',')[0];
       const weatherResponse = await axios.get(
-        `http://localhost:3043/weather?searchQuery=${cityName}&lat=${locationIqData.lat}&lon=${locationIqData.lon}`
+        `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${cityName}&lat=${locationIqData.lat}&lon=${locationIqData.lon}`
       );
 
       const movieResponce = await axios.get(
-        `http://localhost:3043/movies?query=${city}`
+        `${process.env.REACT_APP_SERVER_URL}/movies?query=${city}`
       );
       this.setState({
         locationData: locationIqData,
