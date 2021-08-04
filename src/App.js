@@ -103,9 +103,9 @@ export class App extends Component {
                 />
               </div>
               <div>
-                {this.state.showMovie && 
+                {this.state.showMovie && (
                   <Movies movieData={this.state.movieData} />
-                }
+                )}
               </div>
             </div>
           )}
