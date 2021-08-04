@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import './App.css';
 import Alert from 'react-bootstrap/Alert';
 import Weather from './Weather';
+import Movies from './Movies';
 
 export class App extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export class App extends Component {
       errorMsg: '',
       displayLocation: false,
       showWeather: true,
+      showMovie: true,
     };
   }
 
@@ -29,19 +31,26 @@ export class App extends Component {
       const locationIqData = response.data[0];
       const cityName = locationIqData.display_name.split(',')[0];
       const weatherResponse = await axios.get(
-        `${process.env.REACT_APP_SERVER_URL}/weather?searchQuery=${cityName}&lat=${locationIqData.lat}&lon=${locationIqData.lon}`
+        `http://localhost:3043/weather?searchQuery=${cityName}&lat=${locationIqData.lat}&lon=${locationIqData.lon}`
+      );
+
+      const movieResponce = await axios.get(
+        `http://localhost:3043/movies?query=${city}`
       );
       this.setState({
         locationData: locationIqData,
         errorMsg: '',
         displayLocation: true,
         weatherData: weatherResponse.data,
+        movieData: movieResponce.data,
       });
     } catch (error) {
       this.setState({
         errorMsg: error.message,
         displayLocation: false,
         showWeather: false,
+        showMovie: false,
+        movieData: error.response,
       });
       // console.log(error.message)
     }
@@ -72,7 +81,7 @@ export class App extends Component {
         </center>
         <center>
           <br />
-          {this.state.displayLocation && 
+          {this.state.displayLocation && (
             <div>
               <Card style={{ width: '25rem' }}>
                 <Card.Img
@@ -93,8 +102,13 @@ export class App extends Component {
                   showWeather={this.state.showWeather}
                 />
               </div>
+              <div>
+                {this.state.showMovie && 
+                  <Movies movieData={this.state.movieData} />
+                }
+              </div>
             </div>
-          }
+          )}
         </center>
       </div>
     );
