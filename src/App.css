@@ -22,6 +22,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .App-link {
@@ -36,18 +37,15 @@
     transform: rotate(360deg);
   }
 }
-body{
-  background-color:rgb(218, 234, 236);
-  font-size: 2rem;
-  color: #3b87d4;
-}
+
 Form.Control{
   width: 50%;
 }
 p{
   font-size: 1rem;
 }
-
-
+.body{
+  background-color:black;
+}
 
 

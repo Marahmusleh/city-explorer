@@ -8,6 +8,8 @@ import './App.css';
 import Alert from 'react-bootstrap/Alert';
 import Weather from './Weather';
 import Movies from './Movies';
+import Restaurants from './Restaurants';
+import Header from './Components/Header';
 
 export class App extends Component {
   constructor(props) {
@@ -37,12 +39,16 @@ export class App extends Component {
       const movieResponce = await axios.get(
         `${process.env.REACT_APP_SERVER_URL}/movies?query=${city}`
       );
+        const restRepsone = await axios.get(
+          `${process.env.REACT_APP_SERVER_URL}/yelp?location=${city}`
+        );
       this.setState({
         locationData: locationIqData,
         errorMsg: '',
         displayLocation: true,
         weatherData: weatherResponse.data,
         movieData: movieResponce.data,
+        restaurantData : restRepsone.data,
       });
     } catch (error) {
       this.setState({
@@ -57,26 +63,24 @@ export class App extends Component {
   };
   render() {
     return (
-      <div>
+      <div className="body">
         <center>
+          <Header/>
           <Form onSubmit={this.submitForm}>
             <Form.Group className='mb-3' controlId='exampleForm.ControlInput1'>
-              <Form.Label style={{ padding: '12px 20px' }}>
-                City Name
-              </Form.Label>
               <Form.Control
-                style={{ width: '50%' }}
+                style={{ width: '50%',margin: '50px 20px' }}
                 type='text'
                 placeholder='Enter The City Name'
                 name='cityName'
               />
             </Form.Group>
             <Button type='submit'>Explore!</Button>
-            {this.state.errorMsg && (
+            {this.state.errorMsg && 
               <Alert key={1} variant={'danger'}>
                 {this.state.errorMsg}
               </Alert>
-            )}
+            }
           </Form>
         </center>
         <center>
@@ -97,15 +101,21 @@ export class App extends Component {
               </Card>
 
               <div>
+              {this.state.showWeather && 
                 <Weather
                   weatherData={this.state.weatherData}
-                  showWeather={this.state.showWeather}
                 />
+              }
               </div>
               <div>
-                {this.state.showMovie && (
+                {this.state.showMovie && 
                   <Movies movieData={this.state.movieData} />
-                )}
+                }
+              </div>
+              <div>
+              {this.state.showMovie && 
+                  <Restaurants restaurantData={this.state.restaurantData} />
+                }
               </div>
             </div>
           )}
