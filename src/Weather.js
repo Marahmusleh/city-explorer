@@ -10,7 +10,9 @@ class Weather extends React.Component {
     render() {
         return (
             <>
-                {this.props.showWeather &&
+            <br />
+            <h1>Weather Information ☁ </h1>
+            <br />                
                 <ListGroup style={{display:'inline-block'}}>
                     
                 <ListGroup.Item action variant="success">
@@ -27,7 +29,7 @@ class Weather extends React.Component {
                 </ListGroup.Item>
 
                 </ListGroup>
-                }
+                
 
             </>
 

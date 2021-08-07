@@ -1,0 +1,13 @@
+.card-body {
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0 0px 20px 0 rgba(0,0,0,0.2);
+    background-color: rgb(197 11 11 / 26%);
+    transition: 0.3s;
+  }
+  body{
+      background-color: rgba(77, 66, 66, 0.2);
+  }
+  h1{
+      color:#79b2e3;
+  }
